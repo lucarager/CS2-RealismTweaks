@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="I18N" />
+    <BuildType Name="Release" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CLAUDE.md" />
+    <File Path="crowdin.yaml" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="RealismTweaks/RealismTweaks.csproj" />
+  <Project Path="RealismTweaks.Tests/RealismTweaks.Tests.csproj" />
+</Solution>

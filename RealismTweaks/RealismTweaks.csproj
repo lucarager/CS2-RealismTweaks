@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<Title>RealismTweaks</Title>
+		<AssemblyTitle>$(Title)</AssemblyTitle>
+		<Description>A Cities: Skylines 2 mod.</Description>
+		<Authors>Luca Rager</Authors>
+		<Product>$(Title)</Product>
+		<PublishConfigurationPath>Properties\PublishConfiguration.xml</PublishConfigurationPath>
+		<Version>1.0.0</Version>
+		<AssemblyVersion>$(Version).0</AssemblyVersion>
+		<FileVersion>$(Version).0</FileVersion>
+	</PropertyGroup>
+
+	<!-- Don't compile the submodule's own build output -->
+	<PropertyGroup>
+		<DefaultItemExcludes>$(DefaultItemExcludes);Common\obj\**;Common\bin\**</DefaultItemExcludes>
+	</PropertyGroup>
+
+	<!-- Shared build config: package refs, LangVersion, configs (Debug;Release;I18N), DefineConstants, <Reference> list -->
+	<Import Project="Common\LucaModsCommon.props" />
+
+	<!-- CSII toolchain -->
+	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.props" />
+	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.targets" />
+
+	<!-- Shared build steps (BuildUI / CopyIcons / CustomModPostProcessorConfig / GeneratePublishConfiguration).
+	     MUST be imported AFTER Mod.targets so the shared CustomModPostProcessorConfig overrides the stub. -->
+	<Import Project="Common\LucaModsCommon.targets" />
+
+	<!-- Re-assert language/unsafe settings AFTER the CSII toolchain imports, which reset LangVersion
+	     (LucaModsCommon.props sets these too, but Mod.props/Mod.targets override them). -->
+	<PropertyGroup>
+		<LangVersion>11.0</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="UI\node_modules\**" />
+		<EmbeddedResource Remove="UI\node_modules\**" />
+		<None Remove="UI\node_modules\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="$(ModPropsFile)" Link="Properties\Mod.props" />
+		<None Include="$(ModTargetsFile)" Link="Properties\Mod.targets" />
+	</ItemGroup>
+
+	<!-- Translations are embedded so LucaModBase.LoadNonEnglishLocalizations can find them
+	     (resource name: RealismTweaks.L10n.lang.<locale>.json). en-US is excluded because it is
+	     supplied in code by EnUsConfig. -->
+	<ItemGroup>
+		<Folder Include="L10n\lang\" />
+		<EmbeddedResource Include="L10n\lang\*.json" Exclude="L10n\lang\en-US.json" />
+	</ItemGroup>
+
+</Project>

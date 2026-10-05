@@ -1,0 +1,28 @@
+bin
+/docs/
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# UI
+node_modules
+UI/debug
+UI/build
+
+# Claude
+.claude/settings.local.json
+CLAUDE.md
